@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.green.cafe.dao.MemDao">
+    <select id="loginYn" parameterType="hashmap" resultType="com.green.cafe.dto.MemDto">  
+		SELECT mem_pw FROM member where mem_id=#{mem_id}
+    </select>
+    <select id="memberView" parameterType="hashmap" resultType="com.green.cafe.dto.MemDto">  
+		SELECT * FROM member where mem_id=#{mem_id}
+    </select>
+    <insert id="register" parameterType="hashmap">
+    	insert into member(mem_id, mem_pw, mem_name, mem_tel, mem_email) 
+    		        values(#{mem_id},#{mem_pw},#{mem_name},#{mem_tel},#{mem_email})
+    </insert>
+    <update id="updateInfo" parameterType="hashmap">
+    	update member SET mem_pw=#{mem_pw}, mem_name=#{mem_name}, mem_tel=#{mem_tel}, mem_email=#{mem_email} where mem_id=#{mem_id}
+    </update>
+    <delete id="deleteMember" parameterType="hashmap">
+    	delete from member where mem_id=#{mem_id} 
+    </delete>
+</mapper>
