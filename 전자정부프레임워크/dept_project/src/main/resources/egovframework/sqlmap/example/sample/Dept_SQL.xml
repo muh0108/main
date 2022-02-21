@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Sample">
+
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="DeptVO" type="egovframework.example.sample.service.DeptVO"/>
+	<!-- 등록 -->
+	<insert id="deptDAO.insertDept">
+		<![CDATA[
+			INSERT INTO DEPT
+				( deptno
+				, dname
+				, loc )
+			VALUES ( #deptno#
+				   , #dname#
+				   , #loc# )
+		]]>
+	</insert>
+	<!-- 목록 -->
+	<select id="deptDAO.selectDeptList" parameterClass="deptVO" resultClass="egovMap">
+
+			SELECT deptno
+				 , dname
+				 , loc
+			FROM DEPT
+	</select>
+	<!-- 조회 -->
+	<select id="deptDAO.selectDeptDetail" resultClass="deptVO"><!-- resultClass="deptVO" : 리턴타입 -->
+        <![CDATA[
+            SELECT deptno
+            	 , dname
+            	 , loc
+              FROM DEPT 
+             WHERE deptno=#deptno#
+        ]]>
+    </select>
+    <!-- 삭제 -->
+    <delete id="deptDAO.deleteDept">
+		<![CDATA[
+			DELETE FROM dept 
+			      WHERE deptno=#deptno#
+		]]>
+	</delete>
+	<!-- 수정 -->
+	<update id="deptDAO.updateDept">
+		<![CDATA[
+			UPDATE dept
+			   SET dname=#dname#
+				 , loc=#loc#
+			 WHERE deptno=#deptno#
+		]]>
+	</update>
+</sqlMap>
+<!-- 21.11.29  -->

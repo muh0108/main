@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Sample">
+
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="EmpVO" type="egovframework.example.sample.service.EmpVO"/>
+	<!-- 등록 -->
+	<insert id="empDAO.insertEmp">
+		<![CDATA[
+			INSERT INTO EMP
+				( empno,
+				  ename,
+				  deptno,
+				  hiredate )
+			VALUES ( #empno#
+				   , #ename#
+				   , #deptno#
+				   , sysdate )
+		]]>
+	</insert>
+	<!-- 목록  -->
+	<select id="empDAO.selectEmpList" parameterClass="empVO" resultClass="egovMap">
+		SELECT empno
+			 , ename
+			 , job
+			 , mgr
+			 , hiredate
+			 , sal
+			 , comm
+			 , deptno
+		  FROM EMP
+		  ORDER BY empno
+	</select>
+	<!-- 조회 -->
+	<select id="empDAO.selectEmpDetail" resultClass="empVO"><!-- resultClass : 리턴타입 -->
+        <![CDATA[
+            SELECT empno
+				 , ename
+				 , job
+				 , nvl(mgr,'0') as mgr
+				 , hiredate
+				 , nvl(sal,'0') as sal
+				 , nvl(comm,'0') as comm
+				 , deptno
+              FROM EMP
+             WHERE empno=#empno#
+        ]]>
+    <!-- int인 항목에 null값있으면 오류될 수 있음. String 타임으로 바꾸거나  nvl(comm,'0') comm 을 이용해서 null값일 경우 0을 표시 할 수 있도록 하면됨-->
+	<!-- 삭제 -->
+    </select>
+     <delete id="empDAO.deleteEmp">
+		<![CDATA[
+			DELETE FROM emp 
+			      WHERE empno=#empno#
+		]]>
+	</delete>
+	<!-- 수정 -->
+	<update id="empDAO.updateEmp">
+		<![CDATA[
+			UPDATE emp
+			   SET ename=#ename#
+				 , deptno=#deptno#
+			 WHERE empno=#empno#
+		]]>
+	</update>
+</sqlMap>
